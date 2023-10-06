@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web jokes</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <h3>Don't Controll let it be..</h3>
-        <div id="joke" class="joke">
-            //joke here..
-        </div>
-        <button id="joeBtn" class="btn">Next joke...</button>
-        <script src="index.js"></script>
+      <h3>Don't Controll let it be..</h3>
+      <div id="joke" class="joke">//joke here..</div>
+      <div id="loading" class="loading">Loading...</div>
+
+      <button id="jokeBtn" class="btn"><h2>Next joke</h2></button>
+      <script src="index.js"></script>
     </div>
-</body>
+    <script>
+      const jokeElm = document.getElementById("joke");
+      const jokeBtn = document.getElementById("jokeBtn");
+      const loading=document.getElementById('loading');
+
+      jokeBtn.addEventListener('click',genrateJoke)
+      genrateJoke();
+      function genrateJoke() {
+        loading.style.display='block';
+        jokeElm.style.display="none";
+        const config = {
+          headers: {
+            Accept: " application/json ",
+          },
+        };
+        fetch("https://icanhazdadjoke.com", config)
+          .then((respone) => respone.json())
+          .then((data) =>{
+            jokeElm.innerHTML=data.joke
+            console.log(data)
+            loading.style.display="none";
+            jokeElm.style.display="block";
+            
+          });
+      }
+    </script>
+  </body>
 </html>
